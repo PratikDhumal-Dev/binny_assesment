@@ -46,7 +46,7 @@ const CartScreen = () => {
       <Image source={{ uri: item.image }} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemTitle}>{item.title}</Text>
-        <Text style={styles.itemPrice}>${item.price}</Text>
+        <Text style={styles.itemPrice}>₹{item.price}</Text>
         <View style={styles.quantityContainer}>
           <TouchableOpacity
             style={styles.quantityButton}
@@ -87,7 +87,7 @@ const CartScreen = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Shopping Cart</Text>
         <TouchableOpacity onPress={handleClearCart} style={styles.clearButton}>
-          <Ionicons name="trash-outline" size={24} color="#FF3B30" />
+          <Text style={styles.clearButtonText}>Clear</Text>
         </TouchableOpacity>
       </View>
 
@@ -106,7 +106,7 @@ const CartScreen = () => {
         </View>
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total Price:</Text>
-          <Text style={styles.totalPrice}>${total.toFixed(2)}</Text>
+          <Text style={styles.totalPrice}>₹{total.toFixed(2)}</Text>
         </View>
         <TouchableOpacity style={styles.checkoutButton}>
           <Text style={styles.checkoutButtonText}>Checkout</Text>
@@ -137,6 +137,15 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     padding: 8,
+    backgroundColor: '#FF3B30',
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  clearButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
   },
   cartList: {
     padding: 10,
