@@ -256,14 +256,14 @@ const OfflineDataScreen = () => {
         </View>
       )}
 
-      <View style={styles.infoContainer}>
+      {/* <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>Offline Support Features:</Text>
         <Text style={styles.infoText}>• Data cached in AsyncStorage</Text>
         <Text style={styles.infoText}>• Automatic offline detection</Text>
         <Text style={styles.infoText}>• Pull-to-refresh functionality</Text>
         <Text style={styles.infoText}>• Cache management options</Text>
         <Text style={styles.infoText}>• Graceful fallback to cached data</Text>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
