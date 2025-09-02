@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 export default function App() {
   return (
     <Provider store={store}>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <AppNavigator />
     </Provider>
   );

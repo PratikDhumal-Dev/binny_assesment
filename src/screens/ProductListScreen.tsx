@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { addToCart, Product } from '../store/cartSlice';
@@ -154,7 +155,7 @@ const ProductListScreen = () => {
           style={styles.addButton}
           onPress={() => handleAddToCart(item)}
         >
-          <Ionicons name="add-circle" size={24} color="#007AFF" />
+          <Ionicons name="add-circle" size={24} color="#000" />
           <Text style={styles.addButtonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
@@ -162,7 +163,7 @@ const ProductListScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Diamond Jewellery Collection</Text>
       <FlatList
         data={mockProducts}
@@ -172,23 +173,24 @@ const ProductListScreen = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.productList}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
+    color: '#fff',
   },
   productList: {
     padding: 10,
@@ -196,17 +198,19 @@ const styles = StyleSheet.create({
   productCard: {
     flex: 1,
     margin: 5,
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     borderRadius: 12,
     padding: 10,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   productImage: {
     width: '100%',
@@ -221,27 +225,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 5,
-    color: '#333',
+    color: '#fff',
   },
   productPrice: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#007AFF',
+    color: '#ffffff',
     marginBottom: 10,
   },
   addButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f8ff',
+    backgroundColor: '#ffffff',
     padding: 8,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#007AFF',
+    borderColor: '#ffffff',
   },
   addButtonText: {
     marginLeft: 5,
-    color: '#007AFF',
+    color: '#000',
     fontWeight: '600',
   },
 });

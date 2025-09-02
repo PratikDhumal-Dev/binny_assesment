@@ -9,6 +9,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -176,13 +177,14 @@ const TokenStorageScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Secure Token Storage</Text>
-        <Text style={styles.headerSubtitle}>
-          Using Expo SecureStore for sensitive data
-        </Text>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Secure Token Storage</Text>
+          <Text style={styles.headerSubtitle}>
+            Using Expo SecureStore for sensitive data
+          </Text>
+        </View>
 
       {/* Token Input Section */}
       <View style={styles.inputSection}>
@@ -195,6 +197,7 @@ const TokenStorageScreen = () => {
             value={inputToken}
             onChangeText={setInputToken}
             placeholder="Enter access token"
+            placeholderTextColor="#ccc"
             multiline
             numberOfLines={3}
           />
@@ -207,6 +210,7 @@ const TokenStorageScreen = () => {
             value={inputRefreshToken}
             onChangeText={setInputRefreshToken}
             placeholder="Enter refresh token"
+            placeholderTextColor="#ccc"
             multiline
             numberOfLines={2}
           />
@@ -219,6 +223,7 @@ const TokenStorageScreen = () => {
             value={inputUserId}
             onChangeText={setInputUserId}
             placeholder="Enter user ID"
+            placeholderTextColor="#ccc"
           />
         </View>
 
@@ -329,52 +334,55 @@ const TokenStorageScreen = () => {
           <Text style={styles.infoText}>Token refresh capability</Text>
         </View>
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   contentContainer: {
     paddingBottom: 20,
   },
   header: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
     marginBottom: 5,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
   },
   inputSection: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     margin: 15,
     padding: 20,
     borderRadius: 12,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
     marginBottom: 15,
   },
   inputContainer: {
@@ -383,16 +391,17 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#333',
+    color: '#fff',
     marginBottom: 5,
   },
   textInput: {
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: '#333',
     borderRadius: 8,
     padding: 12,
     fontSize: 14,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#222',
+    color: '#fff',
   },
   buttonRow: {
     flexDirection: 'row',
@@ -411,29 +420,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF9500',
   },
   storeButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#34C759',
   },
   buttonText: {
-    color: 'white',
+    color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
   },
   tokensSection: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     margin: 15,
     padding: 20,
     borderRadius: 12,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   tokenCard: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#222',
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
@@ -455,12 +466,12 @@ const styles = StyleSheet.create({
   tokenLabel: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#666',
+    color: '#ccc',
     marginBottom: 2,
   },
   tokenValue: {
     fontSize: 14,
-    color: '#333',
+    color: '#fff',
     fontFamily: 'monospace',
   },
   actionButtons: {
@@ -474,18 +485,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF3B30',
   },
   infoSection: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     margin: 15,
     padding: 20,
     borderRadius: 12,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   infoItem: {
     flexDirection: 'row',
@@ -495,18 +508,18 @@ const styles = StyleSheet.create({
   infoText: {
     marginLeft: 10,
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
   },
 });
 

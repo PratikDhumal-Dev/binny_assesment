@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -198,7 +199,7 @@ const OfflineDataScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Users Data</Text>
         <View style={styles.statusContainer}>
@@ -263,20 +264,20 @@ const OfflineDataScreen = () => {
         <Text style={styles.infoText}>• Cache management options</Text>
         <Text style={styles.infoText}>• Graceful fallback to cached data</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   header: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -284,7 +285,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
   },
   statusContainer: {
     flexDirection: 'row',
@@ -298,21 +299,21 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
     fontWeight: '500',
   },
   lastUpdatedContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     padding: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
   },
   lastUpdatedText: {
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
   },
   clearCacheButton: {
     flexDirection: 'row',
@@ -328,18 +329,20 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   userCard: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     borderRadius: 12,
     padding: 15,
     marginBottom: 10,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   userHeader: {
     flexDirection: 'row',
@@ -350,13 +353,13 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
   },
   avatarText: {
-    color: 'white',
+    color: '#000',
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -366,12 +369,12 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
     marginBottom: 2,
   },
   userUsername: {
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
   },
   onlineIndicator: {
     padding: 8,
@@ -391,29 +394,29 @@ const styles = StyleSheet.create({
   detailText: {
     marginLeft: 10,
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
     flex: 1,
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   emptyText: {
     fontSize: 18,
-    color: '#666',
+    color: '#ccc',
     marginTop: 20,
     marginBottom: 20,
   },
   fetchButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 8,
   },
   fetchButtonText: {
-    color: 'white',
+    color: '#000',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -423,30 +426,30 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
   },
   infoContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     padding: 15,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: '#333',
   },
   infoTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
     marginBottom: 8,
   },
   infoText: {
     fontSize: 12,
-    color: '#666',
+    color: '#ccc',
     marginBottom: 2,
   },
 });

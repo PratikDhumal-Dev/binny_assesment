@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
 interface ListItem {
@@ -133,7 +134,7 @@ const LargeListScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Large List (5,000 Items)</Text>
         <View style={styles.statsContainer}>
@@ -169,33 +170,33 @@ const LargeListScreen = () => {
         }}
       />
 
-      <View style={styles.performanceInfo}>
+      {/* <View style={styles.performanceInfo}>
         <Text style={styles.performanceTitle}>Performance Optimizations:</Text>
         <Text style={styles.performanceText}>• getItemLayout for fixed height items</Text>
         <Text style={styles.performanceText}>• windowSize optimization</Text>
         <Text style={styles.performanceText}>• Pagination with onEndReached</Text>
         <Text style={styles.performanceText}>• removeClippedSubviews enabled</Text>
         <Text style={styles.performanceText}>• Optimized renderItem with useCallback</Text>
-      </View>
-    </View>
+      </View> */}
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   header: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
     marginBottom: 10,
   },
   statsContainer: {
@@ -204,26 +205,28 @@ const styles = StyleSheet.create({
   },
   statsText: {
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
     fontWeight: '500',
   },
   listContainer: {
     padding: 10,
   },
   itemContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     borderRadius: 12,
     padding: 15,
     marginBottom: 10,
     height: ITEM_HEIGHT,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   itemHeader: {
     flexDirection: 'row',
@@ -234,23 +237,23 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
     flex: 1,
   },
   categoryBadge: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
   },
   categoryText: {
-    color: 'white',
+    color: '#000',
     fontSize: 12,
     fontWeight: '500',
   },
   itemDescription: {
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
     marginBottom: 8,
     flex: 1,
   },
@@ -272,30 +275,30 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginLeft: 10,
-    color: '#666',
+    color: '#ccc',
     fontSize: 14,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   performanceInfo: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     padding: 15,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: '#333',
   },
   performanceTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
     marginBottom: 8,
   },
   performanceText: {
     fontSize: 12,
-    color: '#666',
+    color: '#ccc',
     marginBottom: 2,
   },
 });

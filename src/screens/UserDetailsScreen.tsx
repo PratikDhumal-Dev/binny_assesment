@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -149,17 +150,18 @@ const UserDetailsScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <Ionicons name="arrow-back" size={24} color="#007AFF" />
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        {/* Header */}
+        <View style={styles.header}>
+                  <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+          <Ionicons name="arrow-back" size={24} color="#ffffff" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>User Details</Text>
-        <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
-          <Ionicons name="refresh" size={24} color="#007AFF" />
+          <Text style={styles.headerTitle}>User Details</Text>
+                  <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+          <Ionicons name="refresh" size={24} color="#ffffff" />
         </TouchableOpacity>
-      </View>
+        </View>
 
       {/* User Profile Card */}
       <View style={styles.profileCard}>
@@ -275,27 +277,28 @@ const UserDetailsScreen = () => {
         <Text style={styles.deepLinkText}>
           The user ID parameter was extracted from the URL and used to fetch user data.
         </Text>
-      </View>
-    </ScrollView>
+              </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   contentContainer: {
     paddingBottom: 20,
   },
   header: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
   },
   backButton: {
     padding: 8,
@@ -303,77 +306,81 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
   },
   refreshButton: {
     padding: 8,
   },
   profileCard: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     margin: 15,
     padding: 20,
     borderRadius: 12,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   avatarContainer: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
   },
   avatarText: {
-    color: 'white',
+    color: '#000',
     fontSize: 32,
     fontWeight: 'bold',
   },
   userName: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
     marginBottom: 5,
   },
   userUsername: {
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
     marginBottom: 10,
   },
   userId: {
     fontSize: 14,
-    color: '#999',
-    backgroundColor: '#f0f0f0',
+    color: '#ccc',
+    backgroundColor: '#333',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,
   },
   section: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     margin: 15,
     padding: 20,
     borderRadius: 12,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
     marginBottom: 15,
   },
   infoRow: {
@@ -388,31 +395,31 @@ const styles = StyleSheet.create({
   infoLabel: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#666',
+    color: '#ccc',
     marginBottom: 2,
   },
   infoValue: {
     fontSize: 16,
-    color: '#333',
+    color: '#fff',
     lineHeight: 22,
   },
   deepLinkInfo: {
-    backgroundColor: '#e3f2fd',
+    backgroundColor: '#1a1a2e',
     margin: 15,
     padding: 20,
     borderRadius: 12,
     borderLeftWidth: 4,
-    borderLeftColor: '#2196f3',
+    borderLeftColor: '#ffffff',
   },
   deepLinkTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1976d2',
+    color: '#ffffff',
     marginBottom: 10,
   },
   deepLinkText: {
     fontSize: 14,
-    color: '#1976d2',
+    color: '#ffffff',
     marginBottom: 5,
     lineHeight: 20,
   },
@@ -420,36 +427,36 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
     padding: 20,
   },
   errorTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
     marginTop: 20,
     marginBottom: 10,
   },
   errorMessage: {
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
     textAlign: 'center',
     marginBottom: 20,
     lineHeight: 22,
   },
   retryButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -458,7 +465,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   retryButtonText: {
-    color: 'white',
+    color: '#000',
     fontSize: 16,
     fontWeight: '600',
   },

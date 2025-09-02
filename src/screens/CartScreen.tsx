@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { RootState } from '../store/store';
@@ -82,7 +83,7 @@ const CartScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Shopping Cart</Text>
         <TouchableOpacity onPress={handleClearCart} style={styles.clearButton}>
@@ -111,28 +112,28 @@ const CartScreen = () => {
           <Text style={styles.checkoutButtonText}>Checkout</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#fff',
   },
   clearButton: {
     padding: 8,
@@ -142,18 +143,20 @@ const styles = StyleSheet.create({
   },
   cartItem: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     borderRadius: 12,
     padding: 15,
     marginBottom: 10,
-    shadowColor: '#000',
+    shadowColor: '#ffffff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 3.84,
     elevation: 5,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   itemImage: {
     width: 80,
@@ -169,12 +172,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 5,
-    color: '#333',
+    color: '#fff',
   },
   itemPrice: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#007AFF',
+    color: '#ffffff',
     marginBottom: 10,
   },
   quantityContainer: {
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#333',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -195,16 +198,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     minWidth: 20,
     textAlign: 'center',
+    color: '#fff',
   },
   removeButton: {
     padding: 8,
     justifyContent: 'center',
   },
   footer: {
-    backgroundColor: 'white',
+    backgroundColor: '#111',
     padding: 20,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: '#333',
   },
   totalContainer: {
     flexDirection: 'row',
@@ -213,27 +217,27 @@ const styles = StyleSheet.create({
   },
   totalLabel: {
     fontSize: 16,
-    color: '#666',
+    color: '#ccc',
   },
   totalItems: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: '#fff',
   },
   totalPrice: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#007AFF',
+    color: '#ffffff',
   },
   checkoutButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#ffffff',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 10,
   },
   checkoutButtonText: {
-    color: 'white',
+    color: '#000',
     fontSize: 18,
     fontWeight: '600',
   },
@@ -241,12 +245,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#000',
   },
   emptyText: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#666',
+    color: '#ccc',
     marginTop: 20,
   },
   emptySubtext: {

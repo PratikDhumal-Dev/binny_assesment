@@ -35,15 +35,39 @@ const MainTabs = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#ffffff',
+        tabBarInactiveTintColor: '#666',
+        tabBarStyle: {
+          backgroundColor: '#000',
+          borderTopColor: '#333',
+        },
       })}
     >
-      <Tab.Screen name="Products" component={ProductListScreen} />
-      <Tab.Screen name="Cart" component={CartScreen} />
-      <Tab.Screen name="LargeList" component={LargeListScreen} />
-      <Tab.Screen name="OfflineData" component={OfflineDataScreen} />
-      <Tab.Screen name="TokenStorage" component={TokenStorageScreen} />
+      <Tab.Screen 
+        name="Products" 
+        component={ProductListScreen} 
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen 
+        name="Cart" 
+        component={CartScreen} 
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen 
+        name="LargeList" 
+        component={LargeListScreen} 
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen 
+        name="OfflineData" 
+        component={OfflineDataScreen} 
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen 
+        name="TokenStorage" 
+        component={TokenStorageScreen} 
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 };
