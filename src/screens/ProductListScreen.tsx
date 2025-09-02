@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { addToCart, Product } from '../store/cartSlice';
 
@@ -139,6 +140,7 @@ const mockProducts: Product[] = [
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation<any>();
 
   const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product));
@@ -165,6 +167,18 @@ const ProductListScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Diamond Jewellery Collection</Text>
+      
+      {/* Navigation Button to UserDetailsScreen */}
+      {/* <View style={styles.navigationContainer}>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => navigation.navigate('UserDetails', { id: '1' })}
+        >
+          <Ionicons name="person-circle" size={20} color="#000" />
+          <Text style={styles.navButtonText}>View User Details</Text>
+        </TouchableOpacity>
+      </View> */}
+      
       <FlatList
         data={mockProducts}
         renderItem={renderProduct}
@@ -247,6 +261,29 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: '#000',
     fontWeight: '600',
+  },
+  navigationContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#111',
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
+  },
+  navButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+  },
+  navButtonText: {
+    marginLeft: 8,
+    color: '#000',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
 

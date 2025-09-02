@@ -94,7 +94,7 @@ const AppNavigator = () => {
         <Stack.Screen 
           name="UserDetails" 
           component={UserDetailsScreen}
-          options={{ title: 'User Details' }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

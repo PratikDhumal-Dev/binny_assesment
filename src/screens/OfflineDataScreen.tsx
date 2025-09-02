@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -37,6 +38,7 @@ const STORAGE_KEY = 'users_data';
 const API_URL = 'https://jsonplaceholder.typicode.com/users';
 
 const OfflineDataScreen = () => {
+  const navigation = useNavigation<any>();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -159,7 +161,11 @@ const OfflineDataScreen = () => {
   };
 
   const renderUser = ({ item }: { item: User }) => (
-    <View style={styles.userCard}>
+    <TouchableOpacity 
+      style={styles.userCard}
+      onPress={() => navigation.navigate('UserDetails', { id: item.id.toString() })}
+      activeOpacity={0.7}
+    >
       <View style={styles.userHeader}>
         <View style={styles.avatarContainer}>
           <Text style={styles.avatarText}>
@@ -195,7 +201,7 @@ const OfflineDataScreen = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
