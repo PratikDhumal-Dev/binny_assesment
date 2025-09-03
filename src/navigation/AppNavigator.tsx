@@ -10,6 +10,7 @@ import UserDetailsScreen from '../screens/UserDetailsScreen';
 import LargeListScreen from '../screens/LargeListScreen';
 import OfflineDataScreen from '../screens/OfflineDataScreen';
 import TokenStorageScreen from '../screens/TokenStorageScreen';
+import DeviceInfoScreen from '../screens/DeviceInfoScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -94,6 +95,11 @@ const AppNavigator = () => {
         <Stack.Screen 
           name="UserDetails" 
           component={UserDetailsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="DeviceInfo" 
+          component={DeviceInfoScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

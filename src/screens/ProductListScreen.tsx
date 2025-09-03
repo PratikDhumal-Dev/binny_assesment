@@ -152,7 +152,7 @@ const ProductListScreen = () => {
       <Image source={{ uri: item.image }} style={styles.productImage} />
       <View style={styles.productInfo}>
         <Text style={styles.productTitle}>{item.title}</Text>
-        <Text style={styles.productPrice}>₹{item.price}</Text>
+        <Text style={styles.productPrice}>${item.price}</Text>
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => handleAddToCart(item)}
@@ -166,18 +166,15 @@ const ProductListScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Diamond Jewellery Collection</Text>
-      
-      {/* Navigation Button to UserDetailsScreen */}
-      {/* <View style={styles.navigationContainer}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Diamond Jewellery Collection</Text>
         <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate('UserDetails', { id: '1' })}
+          style={styles.deviceInfoIcon}
+          onPress={() => navigation.navigate('DeviceInfo')}
         >
-          <Ionicons name="person-circle" size={20} color="#000" />
-          <Text style={styles.navButtonText}>View User Details</Text>
+          <Ionicons name="information-circle" size={24} color="#FFFFFF" />
         </TouchableOpacity>
-      </View> */}
+      </View>
       
       <FlatList
         data={mockProducts}
@@ -197,14 +194,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
     backgroundColor: '#111',
     borderBottomWidth: 1,
     borderBottomColor: '#333',
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#fff',
+    flex: 1,
+  },
+  deviceInfoIcon: {
+    padding: 8,
   },
   productList: {
     padding: 10,
@@ -261,29 +266,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: '#000',
     fontWeight: '600',
-  },
-  navigationContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: '#111',
-    borderBottomWidth: 1,
-    borderBottomColor: '#333',
-  },
-  navButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#FFFFFF',
-  },
-  navButtonText: {
-    marginLeft: 8,
-    color: '#000',
-    fontWeight: '600',
-    fontSize: 16,
   },
 });
 

@@ -76,8 +76,19 @@ src/
 │   ├── LargeListScreen.tsx      # 5K items list
 │   ├── OfflineDataScreen.tsx    # Offline data demo
 │   ├── TokenStorageScreen.tsx   # Secure token storage
-│   └── UserDetailsScreen.tsx    # Deep link target
+│   ├── UserDetailsScreen.tsx    # Deep link target
+│   └── DeviceInfoScreen.tsx     # Device information display
+├── native/                # Native module interfaces
+│   └── DeviceInfoModule.ts      # TypeScript interface for native module
 └── App.tsx               # Main application entry
+
+ios/
+├── DeviceInfoModule.m     # iOS native module implementation
+
+android/
+├── app/src/main/java/com/binny/
+│   ├── DeviceInfoModule.java    # Android native module implementation
+│   └── DeviceInfoPackage.java   # Android package registration
 ```
 
 ## 🚀 Getting Started
@@ -159,17 +170,18 @@ The large list implementation handles 5,000 items with:
 
 
 
-## 🏗️ Native Module Concept
+## 🏗️ Native Module Implementation
 
-### Conceptual Implementation
+### Device Information Module
 
-While this project doesn't include actual native code, here's how you would implement a native module to get device OS version:
+This project includes a fully functional native module that provides comprehensive device information for both iOS and Android platforms.
 
 #### iOS (Objective-C)
 ```objc
 // DeviceInfoModule.m
 #import <React/RCTBridgeModule.h>
 #import <UIKit/UIKit.h>
+#import <sys/utsname.h>
 
 @interface DeviceInfoModule : NSObject <RCTBridgeModule>
 @end
@@ -178,10 +190,30 @@ While this project doesn't include actual native code, here's how you would impl
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(getOSVersion:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(getDeviceInfo:(RCTResponseSenderBlock)callback)
 {
-    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
-    callback(@[osVersion]);
+    UIDevice *device = [UIDevice currentDevice];
+    
+    // Get device model identifier
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *deviceModel = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    
+    // Get device name, system version, battery info, orientation
+    NSString *deviceName = device.name;
+    NSString *systemVersion = device.systemVersion;
+    NSString *systemName = device.systemName;
+    
+    // Create device info dictionary
+    NSDictionary *deviceInfo = @{
+        @"osVersion": systemVersion,
+        @"osName": systemName,
+        @"deviceModel": deviceModel,
+        @"deviceName": deviceName,
+        @"platform": @"iOS"
+    };
+    
+    callback(@[deviceInfo]);
 }
 
 @end
@@ -190,18 +222,36 @@ RCT_EXPORT_METHOD(getOSVersion:(RCTResponseSenderBlock)callback)
 #### Android (Java)
 ```java
 // DeviceInfoModule.java
-package com.yourapp;
+package com.binny;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
 import android.os.Build;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
+import android.app.ActivityManager;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+import android.os.Environment;
+import android.os.StatFs;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 
 public class DeviceInfoModule extends ReactContextBaseJavaModule {
     
+    private final ReactApplicationContext reactContext;
+    
     public DeviceInfoModule(ReactApplicationContext reactContext) {
         super(reactContext);
+        this.reactContext = reactContext;
     }
     
     @Override
@@ -210,29 +260,159 @@ public class DeviceInfoModule extends ReactContextBaseJavaModule {
     }
     
     @ReactMethod
-    public void getOSVersion(Callback callback) {
-        String osVersion = Build.VERSION.RELEASE;
-        callback.invoke(osVersion);
+    public void getDeviceInfo(Callback callback) {
+        try {
+            WritableMap deviceInfo = Arguments.createMap();
+            
+            // OS Information
+            deviceInfo.putString("osVersion", Build.VERSION.RELEASE);
+            deviceInfo.putString("osName", "Android");
+            deviceInfo.putInt("apiLevel", Build.VERSION.SDK_INT);
+            deviceInfo.putString("buildNumber", Build.DISPLAY);
+            
+            // Device Information
+            deviceInfo.putString("deviceModel", Build.MODEL);
+            deviceInfo.putString("manufacturer", Build.MANUFACTURER);
+            deviceInfo.putString("brand", Build.BRAND);
+            deviceInfo.putString("product", Build.PRODUCT);
+            deviceInfo.putString("device", Build.DEVICE);
+            deviceInfo.putString("hardware", Build.HARDWARE);
+            
+            // App Information
+            try {
+                PackageInfo packageInfo = reactContext.getPackageManager()
+                    .getPackageInfo(reactContext.getPackageName(), 0);
+                deviceInfo.putString("appVersion", packageInfo.versionName);
+                deviceInfo.putInt("appVersionCode", packageInfo.versionCode);
+            } catch (PackageManager.NameNotFoundException e) {
+                deviceInfo.putString("appVersion", "Unknown");
+                deviceInfo.putInt("appVersionCode", 0);
+            }
+            
+            // Screen Information
+            WindowManager windowManager = (WindowManager) reactContext.getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+            deviceInfo.putInt("screenWidth", displayMetrics.widthPixels);
+            deviceInfo.putInt("screenHeight", displayMetrics.heightPixels);
+            deviceInfo.putDouble("screenDensity", displayMetrics.density);
+            deviceInfo.putInt("screenDensityDpi", displayMetrics.densityDpi);
+            
+            // Memory Information
+            ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+            ActivityManager activityManager = (ActivityManager) reactContext.getSystemService(Context.ACTIVITY_SERVICE);
+            activityManager.getMemoryInfo(memoryInfo);
+            deviceInfo.putLong("totalMemory", memoryInfo.totalMem);
+            deviceInfo.putLong("availableMemory", memoryInfo.availMem);
+            deviceInfo.putLong("usedMemory", memoryInfo.totalMem - memoryInfo.availMem);
+            
+            // Storage Information
+            StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getPath());
+            long totalStorage = statFs.getTotalBytes();
+            long availableStorage = statFs.getAvailableBytes();
+            deviceInfo.putLong("totalStorage", totalStorage);
+            deviceInfo.putLong("availableStorage", availableStorage);
+            deviceInfo.putLong("usedStorage", totalStorage - availableStorage);
+            
+            // Network Information
+            ConnectivityManager connectivityManager = (ConnectivityManager) reactContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+            if (activeNetwork != null) {
+                deviceInfo.putString("networkType", activeNetwork.getTypeName());
+                deviceInfo.putBoolean("isConnected", activeNetwork.isConnected());
+            } else {
+                deviceInfo.putString("networkType", "None");
+                deviceInfo.putBoolean("isConnected", false);
+            }
+            
+            // Battery Information
+            IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+            Intent batteryStatus = reactContext.registerReceiver(null, intentFilter);
+            if (batteryStatus != null) {
+                int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+                int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+                float batteryPct = level * 100 / (float) scale;
+                deviceInfo.putDouble("batteryLevel", batteryPct);
+                
+                int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                String batteryStatusString;
+                switch (status) {
+                    case BatteryManager.BATTERY_STATUS_CHARGING:
+                        batteryStatusString = "Charging";
+                        break;
+                    case BatteryManager.BATTERY_STATUS_DISCHARGING:
+                        batteryStatusString = "Discharging";
+                        break;
+                    case BatteryManager.BATTERY_STATUS_FULL:
+                        batteryStatusString = "Full";
+                        break;
+                    case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
+                        batteryStatusString = "Not Charging";
+                        break;
+                    default:
+                        batteryStatusString = "Unknown";
+                        break;
+                }
+                deviceInfo.putString("batteryState", batteryStatusString);
+            } else {
+                deviceInfo.putDouble("batteryLevel", -1);
+                deviceInfo.putString("batteryState", "Unknown");
+            }
+            
+            // Platform
+            deviceInfo.putString("platform", "Android");
+            
+            callback.invoke(deviceInfo);
+            
+        } catch (Exception e) {
+            WritableMap error = Arguments.createMap();
+            error.putString("error", e.getMessage());
+            callback.invoke(error);
+        }
     }
 }
-```
 
 #### React Native Usage
 ```tsx
-import { NativeModules } from 'react-native';
+import { getDeviceInfo, DeviceInfo } from '../native/DeviceInfoModule';
 
-const { DeviceInfoModule } = NativeModules;
-
-const getOSVersion = async () => {
+const loadDeviceInfo = async () => {
   try {
-    const osVersion = await DeviceInfoModule.getOSVersion();
-    console.log('Device OS Version:', osVersion);
-    return osVersion;
+    const deviceInfo: DeviceInfo = await getDeviceInfo();
+    console.log('Device Information:', deviceInfo);
+    
+    // Access specific information
+    console.log('OS Version:', deviceInfo.osVersion);
+    console.log('Device Model:', deviceInfo.deviceModel);
+    console.log('Platform:', deviceInfo.platform);
+    
+    return deviceInfo;
   } catch (error) {
-    console.error('Error getting OS version:', error);
+    console.error('Error getting device info:', error);
   }
 };
 ```
+
+#### Device Information Screen
+
+The app includes a dedicated `DeviceInfoScreen` that displays all the device information in an organized, user-friendly interface. Access it via:
+
+- **Navigation button** on the Products screen
+- **Direct navigation** to `DeviceInfo` screen
+- **Programmatic access** using the `getDeviceInfo()` function
+
+#### Information Provided
+
+**iOS:**
+- OS Version, Device Model, Device Name
+- Battery Level, Battery State, Device Orientation
+- Platform identification
+
+**Android:**
+- OS Version, API Level, Build Number
+- Device Model, Manufacturer, Brand, Product
+- App Version, Screen Dimensions, Memory Usage
+- Storage Information, Network Status, Battery Details
 
 ---
 
