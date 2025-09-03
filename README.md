@@ -170,6 +170,47 @@ The large list implementation handles 5,000 items with:
 
 
 
+## 🧪 Code Review Exercise
+
+### Buggy Code Snippet Analysis
+
+**Original Buggy Code:**
+```tsx
+<FlatList 
+  data={data} 
+  renderItem={(item) => <Text>{item.title}</Text>}
+/>
+```
+
+**Issues Identified:**
+
+1. **Incorrect `renderItem` parameter destructuring**: The `renderItem` prop expects a function that receives an object with `item`, `index`, and `separators` properties, not just `item` directly.
+
+2. **Missing `keyExtractor`**: FlatList requires a unique key for each item to optimize rendering and prevent warnings.
+
+3. **Missing `renderItem` type annotation**: TypeScript should have proper typing for better type safety.
+
+4. **Poor performance**: No optimization props like `getItemLayout` or `removeClippedSubviews` for large lists.
+
+**Fixed Code:**
+```tsx
+<FlatList 
+  data={data}
+  keyExtractor={(item) => item.id.toString()}
+  renderItem={({ item }) => <Text>{item.title}</Text>}
+  removeClippedSubviews={true}
+  maxToRenderPerBatch={10}
+  windowSize={10}
+  getItemLayout={(data, index) => ({
+    length: 50, // height of each item
+    offset: 50 * index,
+    index,
+  })}
+/>
+```
+
+---
+
 ## 🏗️ Native Module Implementation
 
 ### Device Information Module
